@@ -4,6 +4,15 @@
   "allowedNonPeerDependencies": [
     "@angular/material"
   ],
+  "assets": [
+    "src/shared/scss/_colors.scss",
+    "src/shared/scss/_breakpoints.scss",
+    "src/shared/scss/_helpers.scss",
+    "src/shared/scss/_components.scss",
+    "src/shared/scss/_components_angular.scss",
+    "src/shared/scss/_general.scss",
+    "src/shared/scss/_theme.scss"
+  ],
   "lib": {
     "entryFile": "src/public-api.ts"
   }
