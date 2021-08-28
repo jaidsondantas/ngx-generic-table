@@ -1,0 +1,50 @@
+<div class="table-overflow mat-elevation-z1 flex-base {{theme}}" *ngIf="!loading">
+  <table *ngIf="count" mat-table [dataSource]="dataSource" matSort>
+    <ng-container *ngFor="let item of columnsTable" matColumnDef="{{item.key}}">
+      <th class="{{item?.config?.cssClass}}" mat-header-cell mat-sort-header *matHeaderCellDef>{{item.value}}</th>
+      <td class="{{item?.config?.cssClass}}" mat-cell *matCellDef="let row">
+        <span *ngIf="item?.config?.type === 'date'">{{row[item.key] | date:item?.config?.format}}</span>
+        <span *ngIf="item?.config?.type !== 'date'">{{row[item.key]}}</span>
+        <ng-container *ngIf="item?.config?.type === 'actions'">
+          <div class="flex">
+            <ng-container *ngFor="let action of dataTableActions;let i = index">
+              <button
+                class="mr-8"
+                *ngIf="action.TypeAction === 'icon'"
+                [disabled]="!(action?.visible && action?.visible(row, action.action))"
+                mat-icon-button color="primary"
+                (click)="tableEventHandler(action.action, row, $event)"
+                matTooltip="{{action.tooltip}}">
+                <mat-icon *ngIf="action?.icon">{{action?.icon}}</mat-icon>
+              </button>
+              <button
+                *ngIf="action.TypeAction === 'button'"
+                [disabled]="!(action?.visible && action?.visible(row, action.action))"
+                mat-stroked-button color="primary"
+                (click)="tableEventHandler(action.action, row, $event)"
+                matTooltip="{{action.tooltip}}">
+                <mat-icon class="mr-4" *ngIf="action?.icon">{{action?.icon}}</mat-icon>
+                <span class="cursor-pointer" *ngIf="action?.label">{{action?.label}}</span>
+              </button>
+              <span
+                *ngIf="action?.visible && action?.visible(row, action.action) &&
+                action.TypeAction === 'text'">
+                {{action?.label}}
+              </span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedTableColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedTableColumns;"></tr>
+  </table>
+  <mat-paginator
+    #paginator
+    *ngIf="count"
+    showFirstLastButtons
+    [length]="count"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="alterPage.emit($event)"
+  ></mat-paginator>
+</div>

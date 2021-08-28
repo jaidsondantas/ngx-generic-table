@@ -2,6 +2,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "strictPropertyInitialization": false,
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
     "declaration": true,
@@ -12,6 +13,14 @@
       "dom",
       "es2018"
     ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true,
+    "strictPropertyInitialization": false
   },
   "exclude": [
     "src/test.ts",
